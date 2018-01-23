@@ -1,13 +1,12 @@
 import numpy as np
 
 class VotedPerceptron:
-    #x (vector of vectors) and y(vector of values) represent the dataset and t is the number of epoch
-    def __init__(self , x , y , t):
-        self.x = x;
-        self.y = y;
+    # t is the number of epoch
+    def __init__(self ,dataSet , t):
+        self.dataSet=dataSet;
         self.t = t;
         #w is the vector of weights
-        self.w=np.zeros(len(x[0]));
+        self.w=np.zeros(len(self.dataSet.getx()[0]));
         #v is the vector of all the different w found and c indicates the life of each w --to fix: they might not be long x
         #v and c are python list cause take only O(1) to append values and now they are only used for store
         self.v=[];
@@ -18,15 +17,14 @@ class VotedPerceptron:
     def train(self):
         k=0;
         for epoch in range(0,self.t):
-            dataSetDim=len(self.x)
-            for i in range(0,dataSetDim):
-                prediction=np.sign(np.dot(self.x[i],self.w));
+            for i in range(0,self.dataSet.getDimension()):
+                prediction=np.sign(np.dot(self.dataSet.getx()[i],self.w));
                 if prediction==0:
                     prediction=1;
-                if prediction == self.y[i]:
+                if prediction == self.dataSet.gety()[i]:
                     self.c[k]+=1;
                 else:
-                    self.w=self.w+self.y[i]*self.x[i]; #update the value of w
+                    self.w=self.w+self.dataSet.gety()[i]*self.dataSet.getx()[i]; #update the value of w
                     self.v.append(self.w); #append to v the new value of w
                     self.c.append(1);
                     k+=1;
