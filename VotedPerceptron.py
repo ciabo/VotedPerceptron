@@ -21,6 +21,8 @@ class VotedPerceptron:
             dataSetDim=len(self.x)
             for i in range(0,dataSetDim):
                 prediction=np.sign(np.dot(self.x[i],self.w));
+                if prediction==0:
+                    prediction=1;
                 if prediction == self.y[i]:
                     self.c[k]+=1;
                 else:
@@ -28,11 +30,16 @@ class VotedPerceptron:
                     self.v.append(self.w); #append to v the new value of w
                     self.c.append(1);
                     k+=1;
-
+        print(self.w);
     def predict(self, x):
         s=0;
-        #In order to make operations with the vector v i convert it to a numpy array. The op. costs O(n)
+        #In order to make operations with the vector v it is converted to a numpy array. The op. costs O(n)
         historic=np.array(self.v);
         for i in range(0, len(self.v)):
-            s+=self.c[i]*np.sign(np.dot(historic[i],x));
+            tmp=np.sign(np.dot(historic[i],x));
+            if tmp==0:
+                tmp=1;
+            s+=self.c[i]*tmp;
+        if np.sign(s)==0:
+            return 1
         return np.sign(s);

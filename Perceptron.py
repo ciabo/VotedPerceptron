@@ -24,4 +24,7 @@ class Perceptron:
                     nerror+=1;
         print(self.w,self.b);
     def predict(self,x):
-        return np.sign(np.dot(self.w,x));
+        r=np.sign(np.dot(self.w,x)+self.b);
+        if r==0:
+            r=1;
+        return r;
