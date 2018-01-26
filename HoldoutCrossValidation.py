@@ -33,7 +33,7 @@ def splitAndTest(dataset):
 
 def test(trainingSet, testSet):
     perceptron=p.Perceptron(trainingSet);
-    perceptron.train(100); # <--- Change the number to change the max iterations of the perceptron
+    perceptron.train(50); # <--- Change the number to change the max iterations of the perceptron
     votedPerceptron=vp.VotedPerceptron(trainingSet,5); # <--- Change the number to change the epochs of the voted Perceptron
     votedPerceptron.train()
 

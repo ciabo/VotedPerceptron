@@ -8,10 +8,15 @@ dorotheaTrain=dt.DataSet(dorotheaTrain=True);
 dorotheaTest=dt.DataSet(dorotheaTest=True);
 
 print("not minmaxscaled dataset")
+cv.splitAndTest(banknoteDataSet);
 cv.splitAndTest(htryDataSet);
-htryDataSet.minmaxScale();
+print("")
 print("")
 print("minmaxscaled dataset")
-cv.splitAndTest(htryDataSet)
-#cv.splitAndTest(htryDataSet);
-#cv.test(dorotheaTrain,dorotheaTest);
+banknoteDataSet.minmaxScale();
+htryDataSet.minmaxScale();
+cv.splitAndTest(banknoteDataSet);
+cv.splitAndTest(htryDataSet);
+print("------")
+cv.test(dorotheaTrain,dorotheaTest);
+
