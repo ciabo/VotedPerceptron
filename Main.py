@@ -1,12 +1,12 @@
-import numpy as np
-import VotedPerceptron as vp
-import Perceptron as p
+import os
 import DataSet as dt
+import HoldoutCrossValidation as cv
 
-banknoteDataSet=dt.DataSet('data_banknote_authentication.txt')
-htruDataSet=dt.DataSet('HTRU_2.txt');
+banknoteDataSet=dt.DataSet(filename='dataSets/data_banknote_authentication.txt');
+htryDataSet=dt.DataSet(filename='dataSets/HTRU_2.txt')
+dorotheaTrain=dt.DataSet(dorotheaTrain=True);
+dorotheaTest=dt.DataSet(dorotheaTest=True);
 
-vp=vp.VotedPerceptron(banknoteDataSet,2);
-vp.train();
-p=p.Perceptron(banknoteDataSet);
-p.train(100);
+cv.splitAndTest(banknoteDataSet);
+cv.splitAndTest(htryDataSet);
+cv.test(dorotheaTrain,dorotheaTest);

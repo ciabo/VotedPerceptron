@@ -28,7 +28,8 @@ class VotedPerceptron:
                     self.v.append(self.w); #append to v the new value of w
                     self.c.append(1);
                     k+=1;
-        print(self.w);
+
+
     def predict(self, x):
         s=0;
         #In order to make operations with the vector v it is converted to a numpy array. The op. costs O(n)
