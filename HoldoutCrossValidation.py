@@ -39,14 +39,42 @@ def test(trainingSet, testSet):
 
     perceptronErrors = 0;
     votedPerceptronErrors = 0;
+    pconfusionMatrix=np.zeros(shape=(2,2)); # (rows -> real) row 0 = +1 row 1 = -1 | (column -> predicted) column 0 = +1 column 1 = -1
+    vpconfusionMatrix = np.zeros(shape=(2, 2));
+
     for i in range(0,testSet.getDimension()):
+
         perceptronPrediction=perceptron.predict(testSet.getx()[i]);
         if perceptronPrediction!=testSet.gety()[i] :
             perceptronErrors+=1;
+            if perceptronPrediction==1:
+                pconfusionMatrix[0][1]+=1;
+            else:
+                pconfusionMatrix[1][0] += 1;
+        else:
+            if perceptronPrediction==1:
+                pconfusionMatrix[0][0]+=1;
+            else:
+                pconfusionMatrix[1][1] += 1;
+
         votedPerceptronPrediction=votedPerceptron.predict(testSet.getx()[i]);
         if votedPerceptronPrediction!=testSet.gety()[i] :
             votedPerceptronErrors+=1;
+            if votedPerceptronPrediction==1:
+                vpconfusionMatrix[0][1]+=1;
+            else:
+                vpconfusionMatrix[1][0] += 1;
+        else:
+            if votedPerceptronPrediction==1:
+                vpconfusionMatrix[0][0]+=1;
+            else:
+                vpconfusionMatrix[1][1] += 1;
 
-    print("dimensioni test set: ",testSet.getDimension());
-    print("errori voted perceptron: ",votedPerceptronErrors);
-    print("errori perceptron: ",perceptronErrors)
+    perceptronAccuracy = round(((testSet.getDimension()-perceptronErrors)/testSet.getDimension())*100,2);
+    votedPerceptronAccuracy = round(((testSet.getDimension() - votedPerceptronErrors) / testSet.getDimension()) * 100,2);
+
+    print("Test set dimensions: ",testSet.getDimension());
+    print("Voted perceptron errors: ",votedPerceptronErrors," | Accuracy: ",votedPerceptronAccuracy,"%");
+    print(vpconfusionMatrix);
+    print("Perceptron errors: ",perceptronErrors," | Accuracy: ",perceptronAccuracy,"%");
+    print(pconfusionMatrix);
