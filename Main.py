@@ -7,6 +7,11 @@ htryDataSet=dt.DataSet(filename='dataSets/HTRU_2.txt')
 dorotheaTrain=dt.DataSet(dorotheaTrain=True);
 dorotheaTest=dt.DataSet(dorotheaTest=True);
 
-cv.splitAndTest(banknoteDataSet);
+print("not minmaxscaled dataset")
 cv.splitAndTest(htryDataSet);
-cv.test(dorotheaTrain,dorotheaTest);
+htryDataSet.minmaxScale();
+print("")
+print("minmaxscaled dataset")
+cv.splitAndTest(htryDataSet)
+#cv.splitAndTest(htryDataSet);
+#cv.test(dorotheaTrain,dorotheaTest);

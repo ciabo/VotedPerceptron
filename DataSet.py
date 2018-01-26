@@ -25,6 +25,18 @@ class DataSet:
     def getFeaturesNumber(self):
         return self.featuresNumber;
 
+    def minmaxScale(self):
+        for i in range(0,self.featuresNumber):
+            min = self.x[0][i];
+            max = self.x[0][i];
+            for j in range(0,self.dimension):
+                if self.x[j][i]>max:
+                    max=self.x[j][i];
+                elif self.x[j][i]<min:
+                    min=self.x[j][i];
+            for j in range(0, self.dimension):
+                self.x[j][i]=(self.x[j][i]-min)/(max-min);
+
     def populateByFilename(self,filename):
         numLines = 0
         numColumns = 0;
