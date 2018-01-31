@@ -48,7 +48,6 @@ class DataSet:
         self.y = np.empty(numLines);
         self.dimension = numLines;
         self.featuresNumber = numColumns - 1;
-
         k = 0;
         with open(filename) as f:
             for line in f:
@@ -61,6 +60,7 @@ class DataSet:
                     self.y[k] = 1;
                 k += 1;
 
+
     def populateWithDorotheaTrain(self):
         self.x = np.zeros(shape=(800, 100001));
         k = 0;
@@ -72,7 +72,6 @@ class DataSet:
                     n = int(n);
                     self.x[k][n] = 1;
                 k += 1;
-
         self.y = np.zeros(800)
         k = 0;
         with open('dataSets/dorothea_train.labels') as f:
@@ -94,7 +93,6 @@ class DataSet:
                     n = int(n);
                     self.x[k][n] = 1;
                 k += 1;
-
         self.y = np.zeros(350)
         k = 0;
         with open('dataSets/dorothea_valid.labels') as f:

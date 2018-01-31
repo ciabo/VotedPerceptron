@@ -1,22 +1,24 @@
-import os
 import DataSet as dt
-import HoldoutCrossValidation as cv
+import Validation as cv
+
+for k in range(0,5):
+    print("iterazione: ",k);
+    banknoteDataSet=dt.DataSet(filename='dataSets/data_banknote_authentication.txt');
+    htruDataSet=dt.DataSet(filename='dataSets/HTRU_2.txt');
+    dorotheaTrain=dt.DataSet(dorotheaTrain=True);
+    dorotheaTest=dt.DataSet(dorotheaTest=True);
+    print("-------");
+    print("BANKNOTE DATASET");
+    cv.holdoutCrossValidation(banknoteDataSet);
+    print("-------");
+    print("HTRU_2 DATASET");
+    cv.holdoutCrossValidation(htruDataSet);
+    print("------");
+    print("DOROTHEA");
+    cv.test(dorotheaTrain,dorotheaTest);
+    print("");
+    print("");
+
 
 banknoteDataSet=dt.DataSet(filename='dataSets/data_banknote_authentication.txt');
-htryDataSet=dt.DataSet(filename='dataSets/HTRU_2.txt')
-dorotheaTrain=dt.DataSet(dorotheaTrain=True);
-dorotheaTest=dt.DataSet(dorotheaTest=True);
-
-print("not minmaxscaled dataset")
-cv.splitAndTest(banknoteDataSet);
-cv.splitAndTest(htryDataSet);
-print("")
-print("")
-print("minmaxscaled dataset")
-banknoteDataSet.minmaxScale();
-htryDataSet.minmaxScale();
-cv.splitAndTest(banknoteDataSet);
-cv.splitAndTest(htryDataSet);
-print("------")
-cv.test(dorotheaTrain,dorotheaTest);
-
+cv.kFoldCrossValidation(5,banknoteDataSet)
