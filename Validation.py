@@ -31,12 +31,11 @@ def holdoutCrossValidation(dataset):
     testSet=d.DataSet(xtest,ytest,dim-traindim,dataset.getFeaturesNumber());
     print("NOT MINMAXSCALED");
     test(trainingSet,testSet);
-    print("MINMAXSCALED");
-    trainingSet.minmaxScale();
-    testSet.minmaxScale();
-    test(trainingSet,testSet);
-
-
+    #print("MINMAXSCALED");
+    #trainingSet.minmaxScale();
+    #testSet.minmaxScale();
+    #list=test(trainingSet,testSet);
+    return list;
 
 def kFoldCrossValidation(k,dataset):
     x = dataset.getx();
@@ -52,6 +51,8 @@ def kFoldCrossValidation(k,dataset):
         randomy[i]=y[randomList[i]];
     x=randomx;
     y=randomy;
+    perceptronmatrix=np.zeros(shape=(2,2))
+    list=[]
     for i in range(0,k):
         if i==k-1:
             xtest = x[i * subDataDim:];
@@ -72,9 +73,7 @@ def kFoldCrossValidation(k,dataset):
 
         trainingSet = d.DataSet(xtrain, ytrain, len(ytrain), dataset.getFeaturesNumber());
         testSet = d.DataSet(xtest, ytest, len(ytest), dataset.getFeaturesNumber());
-
         test(trainingSet,testSet);
-
 
 
 def test(trainingSet, testSet):
@@ -125,4 +124,5 @@ def test(trainingSet, testSet):
     print(vpconfusionMatrix);
     print("Perceptron errors: ",perceptronErrors," | Accuracy: ",perceptronAccuracy,"%");
     print(pconfusionMatrix);
-    
+    list=[perceptronAccuracy,votedPerceptronAccuracy,pconfusionMatrix,vpconfusionMatrix]
+    return list

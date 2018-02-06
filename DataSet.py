@@ -1,17 +1,15 @@
 import numpy as np
 
 class DataSet:
-    def __init__(self,x=0,y=0,dimension=0,featuresNumber=0,filename='',dorotheaTrain=False,dorotheaTest=False):
+    def __init__(self,x=0,y=0,dimension=0,featuresNumber=0,filename='',dorothea=False):
         self.x=x;
         self.y=y;
         self.dimension=dimension;
         self.featuresNumber=featuresNumber;
         if filename!='':
             self.populateByFilename(filename);
-        if dorotheaTrain==True:
-            self.populateWithDorotheaTrain();
-        if dorotheaTest==True:
-            self.populateWithDorotheaTest();
+        if dorothea==True:
+            self.populateWithDorothea();
 
     def getx(self):
         return self.x;
@@ -60,7 +58,49 @@ class DataSet:
                     self.y[k] = 1;
                 k += 1;
 
+    def populateWithDorothea(self):
+        xtrain = np.zeros(shape=(800, 100001));
+        k = 0;
+        with open('dataSets/dorothea_train.data') as f:
+            for line in f:
+                list = line.split(" ");
+                list = list[:-1];
+                for n in list:
+                    n = int(n);
+                    xtrain[k][n] = 1;
+                k += 1;
+        ytrain = np.zeros(800)
+        k = 0;
+        with open('dataSets/dorothea_train.labels') as f:
+            for line in f:
+                l = line.split("\n")
+                ytrain[k] = int(l[0]);
+                k += 1;
 
+        xvalid = np.zeros(shape=(350, 100001));
+        k = 0;
+        with open('dataSets/dorothea_valid.data') as f:
+            for line in f:
+                list = line.split(" ");
+                list = list[:-1];
+                for n in list:
+                    n = int(n);
+                    xvalid[k][n] = 1;
+                k += 1;
+        yvalid = np.zeros(350)
+        k = 0;
+        with open('dataSets/dorothea_valid.labels') as f:
+            for line in f:
+                l = line.split("\n")
+                yvalid[k] = int(l[0]);
+                k += 1;
+        #unite trainset and valid set
+        self.x = np.concatenate((xtrain, xvalid))
+        self.y = np.append(ytrain, yvalid)
+        self.dimension=len(self.y)
+        self.featuresNumber=len(self.x[0])
+
+    '''   
     def populateWithDorotheaTrain(self):
         self.x = np.zeros(shape=(800, 100001));
         k = 0;
@@ -102,3 +142,4 @@ class DataSet:
                 k += 1;
         self.dimension = len(self.y);
         self.featuresNumber = len(self.x[0]);
+    '''
