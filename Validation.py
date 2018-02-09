@@ -4,7 +4,7 @@ import VotedPerceptron as vp
 import DataSet as d
 import random
 
-def holdoutCrossValidation(dataset):
+def holdoutCrossValidation(dataset, scale=True):
     x=dataset.getx();
     y=dataset.gety();
     dim=dataset.getDimension();
@@ -31,11 +31,11 @@ def holdoutCrossValidation(dataset):
     testSet=d.DataSet(xtest,ytest,dim-traindim,dataset.getFeaturesNumber());
     print("NOT MINMAXSCALED");
     test(trainingSet,testSet);
-    #print("MINMAXSCALED");
-    #trainingSet.minmaxScale();
-    #testSet.minmaxScale();
-    #list=test(trainingSet,testSet);
-    return list;
+    if scale==True:
+        print("MINMAXSCALED");
+        trainingSet.minmaxScale();
+        testSet.minmaxScale();
+        test(trainingSet,testSet);
 
 def kFoldCrossValidation(k,dataset):
     x = dataset.getx();
@@ -51,8 +51,6 @@ def kFoldCrossValidation(k,dataset):
         randomy[i]=y[randomList[i]];
     x=randomx;
     y=randomy;
-    perceptronmatrix=np.zeros(shape=(2,2))
-    list=[]
     for i in range(0,k):
         if i==k-1:
             xtest = x[i * subDataDim:];
@@ -78,8 +76,8 @@ def kFoldCrossValidation(k,dataset):
 
 def test(trainingSet, testSet):
     perceptron=p.Perceptron(trainingSet);
-    perceptron.train(50); # <--- Change the number to change the max iterations of the perceptron
-    votedPerceptron=vp.VotedPerceptron(trainingSet,5); # <--- Change the number to change the epochs of the voted Perceptron
+    perceptron.train(50); # <---- Change the number to change the max iterations of the perceptron
+    votedPerceptron=vp.VotedPerceptron(trainingSet,5); # <---- Change the number to change the number of epochs of the voted Perceptron
     votedPerceptron.train();
 
     perceptronErrors = 0;
@@ -124,5 +122,3 @@ def test(trainingSet, testSet):
     print(vpconfusionMatrix);
     print("Perceptron errors: ",perceptronErrors," | Accuracy: ",perceptronAccuracy,"%");
     print(pconfusionMatrix);
-    list=[perceptronAccuracy,votedPerceptronAccuracy,pconfusionMatrix,vpconfusionMatrix]
-    return list
