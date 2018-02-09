@@ -9,7 +9,7 @@ To instantiate a new Banknote or HTRU_2 dataset just pass in the constructor the
 A dataset object (no matter what kind of dataset it represent) contain the examples matrix, the labeles vector, the dimension, and the number of features. Getter methods are provided.
 Dataset class also has the function `minmaxScale()` that perform a minmax scalation over the dataset(useless for binary datasets).
 
-In order to make an holdoutcross validation or a k-foldcross validation call the method `holdoutCrossValidation(dataset,scale)` where scale stand for "try even with the scaled version of the dataset" or `kFoldCrossValidation(k,dataset)` respectly.
+In order to make an holdoutcross validation or a k-foldcross validation call the method `holdoutCrossValidation(dataset,scale)` where scale, if True, stands for "try even with the scaled version of the dataset" or `kFoldCrossValidation(k,dataset)` respectly.
 The accuracy and the confusions matrix will be automatically printed by the test function which is called by the two validation algorithm.
 To change the max number of iteration of the perceptron algorithm or the voted perceptron epochs just go to validation.py and search `perceptron.train(50)`,`votedPerceptron=vp.VotedPerceptron(trainingSet,5)` then change the numbers as written in comments in the code.
 
